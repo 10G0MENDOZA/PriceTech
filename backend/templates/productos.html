@@ -1,0 +1,262 @@
+<!-- templates/productos.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resultados | PriceTech</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='productos.css') }}">
+
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>
+
+                Resultados para:
+                <span>"{{ query }}"</span>
+
+            </h1>
+
+            <p class="update">
+
+                Última actualización: {{ ultima_actualizacion }}
+
+            </p>
+
+        </div>
+
+        <a href="/" class="volver">
+
+            ⬅ Volver
+
+        </a>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h2>{{ total_resultados }}</h2>
+
+            <p>Tiendas analizadas</p>
+
+        </div>
+
+        <div class="stat-card best">
+
+            <h2>{{ mejor_precio | cop }}</h2>
+
+            <p>Precio más barato</p>
+
+        </div>
+
+        <div class="stat-card ahorro">
+
+            <h2>{{ ahorro | cop }}</h2>
+
+            <p>Ahorro estimado</p>
+
+        </div>
+
+    </div>
+
+    <!-- MEJOR OFERTA -->
+
+    {% if mejor_producto %}
+
+    <div class="best-product">
+
+        <div class="badge">
+
+            MEJOR OFERTA
+
+        </div>
+
+        <h2>
+
+            {{ mejor_producto.nombre }}
+
+        </h2>
+
+        <p>
+
+            Tienda:
+            <strong>{{ mejor_producto.tienda }}</strong>
+
+        </p>
+
+        <h3>
+
+            {{ mejor_producto.precio | cop }}
+
+        </h3>
+
+        <a href="{{ mejor_producto.url }}" target="_blank">
+
+            Ver oferta
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+    <!-- GRAFICA -->
+    <!-- INFO GRAFICA -->
+
+    <div class="chart-info">
+
+        <h2>
+
+            Comparativa de precios por tienda
+
+        </h2>
+
+        <p>
+
+            Esta gráfica muestra el precio encontrado para el producto buscado en cada tienda tecnológica analizada por PriceTech. Así puedes identificar rápidamente cuál tienda tiene el precio más económico y cuál tiene el más alto.
+
+        </p>
+
+    </div>
+    <div class="chart-container">
+
+        <canvas id="graficaPrecios"></canvas>
+
+    </div>
+
+    <!-- CARDS -->
+
+    <div class="contenedor">
+
+        {% for r in resultados %}
+
+        <div class="card {% if r.es_mejor %}best-card{% endif %}">
+
+            <h3 class="tienda">
+
+                {{ r.tienda }} {% if r.es_mejor %}
+
+                <span class="best-label">
+
+                     MÁS BARATO
+
+                </span> {% endif %}
+
+            </h3>
+
+            {% if r.disponible %}
+
+            <h2>
+
+                {{ r.producto.nombre }}
+
+            </h2>
+
+            <p class="precio">
+
+                {{ r.producto.precio | cop }}
+
+            </p>
+
+            <a href="{{ r.producto.url }}" target="_blank">
+
+                Ver producto
+
+            </a> {% else %}
+
+            <p class="no-disponible">
+
+                No hay productos disponibles
+
+            </p>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- GRAFICA JS -->
+
+    <!-- GRAFICA JS -->
+
+    <script>
+        // DATOS MANUALES DESDE FLASK
+
+        const labels = JSON.parse('{{ labels | tojson | safe }}');
+
+        const precios = JSON.parse('{{ precios | tojson | safe }}');
+
+        // CANVAS
+
+        const ctx = document.getElementById('graficaPrecios');
+
+        // GRAFICA
+
+        new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+
+                    {
+
+                        label: 'Precio',
+
+                        data: precios,
+
+                        borderWidth: 1
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: false
+
+                    }
+
+                }
+
+            }
+
+        });
+    </script>
+</body>
+
+</html>

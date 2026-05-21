@@ -1,0 +1,259 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #050816;
+    overflow: hidden;
+    color: white;
+}
+
+
+/* =========================
+   FONDO ANIMADO
+========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, #00ff9c22, transparent 30%), radial-gradient(circle at bottom right, #00c3ff22, transparent 30%);
+    z-index: -2;
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+
+/* =========================
+   VIDEO IZQUIERDA
+========================= */
+
+.left {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.left video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+}
+
+
+/* Overlay */
+
+.left::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( to right, rgba(5, 8, 22, 0.1), rgba(5, 8, 22, 0.9));
+}
+
+
+/* =========================
+   PANEL DERECHO
+========================= */
+
+.right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+
+/* =========================
+   CAJA
+========================= */
+
+.box {
+    width: 100%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    border-radius: 25px;
+    padding: 50px;
+    box-shadow: 0 0 25px rgba(0, 255, 156, 0.15);
+}
+
+
+/* =========================
+   TITULO
+========================= */
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    background: linear-gradient( 90deg, #00ff9c, #00c3ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================
+   SUBTITULO
+========================= */
+
+.description {
+    color: #9aa4b2;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   INPUT GROUP
+========================= */
+
+.search-box {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+
+/* INPUT */
+
+.search-box input {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 15px;
+    background: #0f172a;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    box-shadow: 0 0 15px #00ff9c66;
+}
+
+
+/* =========================
+   BOTON
+========================= */
+
+.search-box button {
+    padding: 18px 28px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    background: linear-gradient( 135deg, #00ff9c, #00c3ff);
+    color: #000;
+    transition: 0.3s;
+}
+
+.search-box button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px #00ff9c88;
+}
+
+
+/* =========================
+   FILTROS
+========================= */
+
+.filters {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+
+/* SELECT */
+
+.filters select {
+    flex: 1;
+    min-width: 150px;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: #111827;
+    color: white;
+    outline: none;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+.stat-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-card h2 {
+    color: #00ff9c;
+    margin-bottom: 8px;
+}
+
+.stat-card p {
+    color: #8b949e;
+    font-size: 0.9rem;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px) {
+    .container {
+        flex-direction: column;
+    }
+    .left {
+        height: 35vh;
+        width: 100%;
+    }
+    .right {
+        width: 100%;
+        height: 65vh;
+    }
+    h1 {
+        font-size: 2.8rem;
+    }
+}
